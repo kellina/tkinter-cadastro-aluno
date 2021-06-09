@@ -1,5 +1,5 @@
 import sqlite3
-from data.models.disciplina import Disciplina
+from models.disciplina import *
 
 class DisciplinaRepositorio:
   def __init__(self, disciplina: Disciplina):

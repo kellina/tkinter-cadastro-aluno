@@ -1,38 +1,38 @@
 import sqlite3
-from data.models.nota import Nota
+from models.nota_aluno import *
 
 class NotaRepositorio:
-  def __init__(self, nota: Nota):
+  def __init__(self, nota: NotaAluno):
     print('Metodo construtor')
-    self.nota = Nota
+    self.nota = NotaAluno
     
   def abrirConexao(self):
     self.conn = sqlite3.connect()
     self.cur = self.conn.cursor()
     
     
-  def inserir(self, nota: Nota):
+  def inserir(self, nota: NotaAluno):
     try:
       self.cur.execute("INSERT INTO notas VALUES (?, ?, ?)",
-                      (self.cod_aluno, self.cod_disciplina, self.nota))
+                      (nota.aluno.id, nota.disciplina.id, nota.nota))
       self.conn.commit()
       print('Inserção realizada com sucesso')
     except:
       print('Erro ao realizar inserção.')
    
-  def remover(self, nota: Nota):
-    self.cur.execute("DELETE FROM notas WHERE cod_aluno=?", self.cod_aluno)
+  def remover(self, nota: NotaAluno):
+    self.cur.execute("DELETE FROM notas WHERE cod_aluno=?", nota.aluno.id)
     self.conn.commit()
 
-  def atualizar(self, nota: Nota):
+  def atualizar(self, nota: NotaAluno):
     self.cur.execute("UPDATE notas SET nota = ? WHERE cod_aluno = ?",
-                    (self.nota), self.cod_aluno)
+                    (nota.nota), nota.aluno.id)
     self.conn.commit() 
 
-  def selecionar_aluno(self, nota: Nota):
-    self.cur.execute("SELECT * FROM notas WHERE cod_disciplina = ?", self.cod_disciplina)
+  def selecionar_aluno(self, nota: NotaAluno):
+    self.cur.execute("SELECT * FROM notas WHERE cod_disciplina = ?", nota.disciplina.id)
     self.conn.commit()
   
-  def selecionar_todos_alunos (self, nota: Nota):
+  def selecionar_todos_alunos (self, nota: NotaAluno):
     self.cur.execute("SELECT * FROM notas").fetchall()
     self.conn.commit()
