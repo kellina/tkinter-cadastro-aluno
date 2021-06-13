@@ -1,5 +1,7 @@
 import sqlite3
 
+from typing import Iterable
+
 class Database:
     def __init__(self):
         self.conn = sqlite3.connect('alunos.db')
@@ -36,10 +38,11 @@ class Database:
     def __del__(self):
         self.conn.close()
     
-    def executeQuery(self, sql):
-        self.conn = sqlite3.connect('alunos.db')
-        self.cur = self.conn.cursor()
-        return self.cur.execute(sql).fetchall()
+    def executeSelect(self, sql: str, seq_of_parameters: Iterable[Iterable]):
+        return self.cur.execute(sql, seq_of_parameters).fetchall()
+    
+    def executeInsert(self, sql: str, seq_of_parameters: Iterable[Iterable]):
+        return self.cur.execute(sql, seq_of_parameters).lastrowid
     
     def commit(self):
         self.conn.commit()

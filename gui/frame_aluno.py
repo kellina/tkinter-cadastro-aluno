@@ -1,6 +1,7 @@
 from tkinter import *                    
 from tkinter import ttk
-from repositorio.aluno_repositorio import aluno_repositorio
+from tkinter import messagebox
+from entidades.aluno import Aluno
 
 class FrameAluno(ttk.Frame):
   def __init__(self, master=None, **kw): #construindo meu frame
@@ -8,15 +9,19 @@ class FrameAluno(ttk.Frame):
     self.grid(column=0, row=0, sticky=(N, S, E, W))
     Grid.columnconfigure(self, 0, weight=1)
     # Sessão Formulário de cadastro
+    self.nome_var = StringVar()
+    self.sexo_var = StringVar()
+    self.nascimento_var = StringVar()
+    
     form_label_frame = ttk.Labelframe(self, text='Cadastro de Aluno')
     nome_label = ttk.Label(form_label_frame, text='Nome:')
     sexo_label = ttk.Label(form_label_frame, text='Sexo:')
     nascimento_label = ttk.Label(form_label_frame, text='Nascimento:')
     
-    nome_entry = ttk.Entry(form_label_frame, )
-    nascimento_entry = ttk.Entry(form_label_frame)
-    sexo_m_radio = ttk.Radiobutton(form_label_frame, text='Masculino', value=1)
-    sexo_f_radio = ttk.Radiobutton(form_label_frame, text='Feminino', value=2)
+    nome_entry = ttk.Entry(form_label_frame, textvariable=self.nome_var)
+    nascimento_entry = ttk.Entry(form_label_frame, textvariable=self.nascimento_var)
+    sexo_m_radio = ttk.Radiobutton(form_label_frame, text='Masculino', value='M', variable=self.sexo_var)
+    sexo_f_radio = ttk.Radiobutton(form_label_frame, text='Feminino', value='F', variable=self.sexo_var)
     btn_salvar = ttk.Button(form_label_frame, text='Salvar', command=lambda: self.salvar_aluno())
     
     # Sessão Listagem de alunos cadastrados
@@ -68,4 +73,12 @@ class FrameAluno(ttk.Frame):
   
   def salvar_aluno(self):
     print("Salvando aluno")
+    aluno = Aluno(self.nome_var.get(), self.sexo_var.get(), self.nascimento_var.get())
+    aluno.inserir()
+    messagebox.showinfo(message=f'Aluno {self.nome_var.get()} inserido com sucesso!')
+    self.limpar_formulario()
     
+  def limpar_formulario(self):
+    self.nome_var.set("")
+    self.sexo_var.set("")
+    self.nascimento_var.set("")

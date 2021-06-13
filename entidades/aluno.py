@@ -1,17 +1,22 @@
 from database import db
-class AlunoRepositorio:
-      
-  def inserir_aluno(self):
-    nome = self.nome.get()
-    sexo = self.sexo.get()
-    nascimento = self.nascimento.get()
+
+class Aluno:
+  def __init__(self, nome, sexo, nascimento):
+    super().__init__()
+    self.cod_aluno = None
+    self.nome = nome
+    self.sexo = sexo
+    self.nascimento = nascimento
+
+  def inserir(self):
     try:
-      db.executeQuery("INSERT INTO alunos VALUES (?, ?, ?)",
-                          (nome, sexo, nascimento))
-    except:
-      print('Erro ao realizar inserção.')
-    db.commit()
-    print('Inserção realizada com sucesso')
+      id = db.executeInsert("INSERT INTO alunos(nome, sexo, nascimento) VALUES (?, ?, ?)",
+                          (self.nome, self.sexo, self.nascimento))
+      db.commit()
+      self.cod_aluno = id
+      print('Inserção realizada com sucesso')
+    except Exception as e:
+      print(f'Erro ao realizar inserção: {e}.')
    
   def remover_aluno(self):
     nome = self.nome.get()
@@ -32,5 +37,3 @@ class AlunoRepositorio:
   
   def selecionar_todos_alunos (self):
     return db.executeQuery("SELECT * FROM alunos ORDER BY nome")
-
-aluno_repositorio = AlunoRepositorio()

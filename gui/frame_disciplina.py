@@ -1,7 +1,7 @@
 import tkinter as tk 
 from tkinter import *                   
 from tkinter import ttk
-from repositorio import disciplina_repositorio
+from entidades import disciplina_repositorio
 
 class FrameDisciplina(ttk.Frame):
   def __init__(self, master=None, **kw):
