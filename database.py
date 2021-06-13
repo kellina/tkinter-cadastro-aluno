@@ -24,7 +24,10 @@ class Database:
             """CREATE TABLE IF NOT EXISTS notas (
                 cod_aluno integer, 
                 cod_disciplina integer, 
-                nota real not null,
+                nota_AV1 real not null,
+                nota_AV2 real not null,
+                nota_AV3 real not null,
+                nota_AVD real not null,
                 foreign key(cod_aluno) REFERENCES alunos(cod_aluno),
                 foreign key(cod_disciplina) REFERENCES disciplinas(cod_disciplina)
                 )""")
@@ -32,5 +35,13 @@ class Database:
     
     def __del__(self):
         self.conn.close()
-        
-database = Database()
+    
+    def executeQuery(self, sql):
+        self.conn = sqlite3.connect('alunos.db')
+        self.cur = self.conn.cursor()
+        return self.cur.execute(sql).fetchall()
+    
+    def commit(self):
+        self.conn.commit()
+
+db = Database()

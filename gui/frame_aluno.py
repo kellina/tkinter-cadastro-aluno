@@ -17,7 +17,7 @@ class FrameAluno(ttk.Frame):
     nascimento_entry = ttk.Entry(form_label_frame)
     sexo_m_radio = ttk.Radiobutton(form_label_frame, text='Masculino', value=1)
     sexo_f_radio = ttk.Radiobutton(form_label_frame, text='Feminino', value=2)
-    btn_salvar = ttk.Button(form_label_frame, text='Salvar')
+    btn_salvar = ttk.Button(form_label_frame, text='Salvar', command=lambda: self.salvar_aluno())
     
     # Sessão Listagem de alunos cadastrados
     listagem_label_frame = ttk.Labelframe(self, text='Alunos Cadastrados')
@@ -40,7 +40,12 @@ class FrameAluno(ttk.Frame):
     
     listagem_label_frame.grid(column=0, row=1, sticky=(E, W), pady=10, padx=10)
     
-    alunos = aluno_repositorio.selecionar_todos_alunos()
+    #alunos = aluno_repositorio.selecionar_todos_alunos()
+    alunos = [
+      ('João Batista', 'Masculino', '10/01/1992'),
+      ('Maria Eduarda', 'Feminino', '15/03/1992'),
+      ('Pedro Arthur', 'Masculino', '20/05/1992'),
+      ('Ana Laura', 'Feminino', '22/08/1992')]
     
     colunas = ('#1', '#2', '#3')
     tree = ttk.Treeview(listagem_label_frame, columns=colunas, height=4, show='headings')
@@ -61,5 +66,6 @@ class FrameAluno(ttk.Frame):
     btn_alterar.grid(column=1, row=1)
     btn_excluir.grid(column=2, row=1)    
   
-    
+  def salvar_aluno(self):
+    print("Salvando aluno")
     

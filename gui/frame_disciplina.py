@@ -1,6 +1,7 @@
 import tkinter as tk 
 from tkinter import *                   
 from tkinter import ttk
+from repositorio import disciplina_repositorio
 
 class FrameDisciplina(ttk.Frame):
   def __init__(self, master=None, **kw):
@@ -38,6 +39,7 @@ class FrameDisciplina(ttk.Frame):
     
     listagem_label_frame.grid(column=0, row=1, sticky=(E, W), pady=10, padx=10)
     
+    #disciplinas = disciplina_repositorio.selecionar_todas_disciplinas()
     disciplinas = [
       ('Algoritmos', '40', 'Lorem ipsum, or lipsum as it is sometimes known.'), 
       ('Estrutura de dados', '60', 'Lorem ipsum, or lipsum as it is sometimes known'),

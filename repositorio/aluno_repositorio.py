@@ -1,34 +1,36 @@
-from database import Database
-from models.aluno import *
-
+from database import db
 class AlunoRepositorio:
-  def __init__(self):
-    self.conn = Database()
-    self.cur = conn.cursor()
-    
       
-  def inserir(self, aluno: Aluno):
+  def inserir_aluno(self):
+    nome = self.nome.get()
+    sexo = self.sexo.get()
+    nascimento = self.nascimento.get()
     try:
-      self.cur.execute("INSERT INTO alunos VALUES (?, ?, ?, ?, ?)",
-                          (aluno.cod_aluno, aluno.nome, aluno.sexo, aluno.nascimento))
-      self.conn.commit()
-      print('Inserção realizada com sucesso')
+      db.executeQuery("INSERT INTO alunos VALUES (?, ?, ?)",
+                          (nome, sexo, nascimento))
     except:
       print('Erro ao realizar inserção.')
+    db.commit()
+    print('Inserção realizada com sucesso')
    
-  def remover(self, aluno: Aluno):
-    self.cur.execute("DELETE FROM alunos WHERE cod_aluno=?", (aluno.cod_aluno))
-    self.conn.commit()
+  def remover_aluno(self):
+    nome = self.nome.get()
+    db.executeQuery("DELETE FROM alunos WHERE nome=?", (nome))
+    db.commit()
 
-  def atualizar(self, aluno: Aluno):
-    self.cur.execute("UPDATE alunos SET nome = ?, sexo = ?, nascimento = ? WHERE cod_aluno = ?",
-                      (aluno.nome, aluno.sexo, aluno.nascimento), aluno.cod_aluno)
-    self.conn.commit() 
+  def atualizar_aluno(self):
+    nome = self.nome.get()
+    sexo = self.sexo.get()
+    nascimento = self.nascimento.get()
+    db.execute("UPDATE alunos SET nome = ?, sexo = ?, nascimento = ? WHERE nome = ?",
+                      (nome, sexo, nascimento), nome)
+    db.commit() 
  
-  def selecionar_aluno(self, aluno: Aluno):
-    self.cur.execute("SELECT * FROM alunos WHERE cod_aluno = ?", aluno.cod_aluno)
+  def selecionar_aluno(self):
+    nome = self.nome.get()
+    db.executeQuery("SELECT * FROM alunos WHERE nome = ?", nome)
   
   def selecionar_todos_alunos (self):
-    self.cur.execute("SELECT * FROM alunos ORDER BY nome").fetchall()
+    return db.executeQuery("SELECT * FROM alunos ORDER BY nome")
 
 aluno_repositorio = AlunoRepositorio()
