@@ -18,22 +18,20 @@ class Aluno:
     except Exception as e:
       print(f'Erro ao realizar inserção: {e}.')
    
-  def remover_aluno(self):
-    nome = self.nome.get()
-    db.executeQuery("DELETE FROM alunos WHERE nome=?", (nome))
-    db.commit()
-
-  def atualizar_aluno(self):
-    nome = self.nome.get()
-    sexo = self.sexo.get()
-    nascimento = self.nascimento.get()
-    db.execute("UPDATE alunos SET nome = ?, sexo = ?, nascimento = ? WHERE nome = ?",
-                      (nome, sexo, nascimento), nome)
+  def atualizar(self):
+    db.executeUpdate("UPDATE alunos SET nome = ?, sexo = ?, nascimento = ? WHERE cod_aluno = ?",
+                      (self.nome, self.sexo, self.nascimento, self.cod_aluno))
     db.commit() 
- 
-  def selecionar_aluno(self):
-    nome = self.nome.get()
-    db.executeQuery("SELECT * FROM alunos WHERE nome = ?", nome)
   
-  def selecionar_todos_alunos (self):
-    return db.executeQuery("SELECT * FROM alunos ORDER BY nome")
+  @staticmethod
+  def selecionar_um(cod_aluno):
+    return db.executeSelectUm("SELECT cod_aluno, nome, sexo, nascimento FROM alunos WHERE cod_aluno = ?", cod_aluno)
+  
+  @staticmethod
+  def selecionar_todos():
+    return db.executeSelect("SELECT cod_aluno, nome, sexo, nascimento FROM alunos ORDER BY nome")
+
+  @staticmethod
+  def remover(cod_aluno):
+    db.executeDelete("DELETE FROM alunos WHERE cod_aluno=?", cod_aluno)
+    db.commit()

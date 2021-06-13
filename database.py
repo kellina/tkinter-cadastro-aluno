@@ -38,11 +38,20 @@ class Database:
     def __del__(self):
         self.conn.close()
     
-    def executeSelect(self, sql: str, seq_of_parameters: Iterable[Iterable]):
+    def executeSelect(self, sql: str, seq_of_parameters: Iterable[Iterable]=[]):
         return self.cur.execute(sql, seq_of_parameters).fetchall()
+    
+    def executeSelectUm(self, sql: str, seq_of_parameters: Iterable[Iterable]=[]):
+        return self.cur.execute(sql, seq_of_parameters).fetchone()
     
     def executeInsert(self, sql: str, seq_of_parameters: Iterable[Iterable]):
         return self.cur.execute(sql, seq_of_parameters).lastrowid
+    
+    def executeUpdate(self, sql: str, seq_of_parameters: Iterable[Iterable]=[]):
+        return self.cur.execute(sql, seq_of_parameters)
+    
+    def executeDelete(self, sql: str, seq_of_parameters: Iterable[Iterable]):
+        return self.cur.execute(sql, seq_of_parameters)
     
     def commit(self):
         self.conn.commit()
