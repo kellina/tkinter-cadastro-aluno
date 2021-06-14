@@ -10,9 +10,10 @@ class NotebookAluno(ttk.Notebook): #classe especializada
     self.place_components()
     
   def place_components(self):
+    tabNota = FrameNota(self)
     tabAluno = FrameAluno(self)
     tabDisciplina = FrameDisciplina(self)
-    tabNota = FrameNota(self)
+
     self.add(tabAluno, text='Aluno')
     self.add(tabDisciplina, text='Disciplina')
     self.add(tabNota, text='Nota')

@@ -65,7 +65,7 @@ class FrameAluno(ttk.Frame):
     scrollbar.grid(column=3, row=0, sticky=(N, S), padx=(0, 5))
     btn_incluir.grid(column=0, row=1, pady=(0, 5))
     btn_alterar.grid(column=1, row=1)
-    btn_excluir.grid(column=2, row=1)    
+    btn_excluir.grid(column=2, row=1)
   
   def popular_tree(self):
     alunos = Aluno.selecionar_todos()
