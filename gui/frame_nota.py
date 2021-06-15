@@ -143,7 +143,7 @@ class FrameNota(ttk.Frame):
   
   def extrairId(self, desc):
     return int(desc.split("-")[0].strip())
-
+  
   def salvar_notas(self):
     print('Salvando notas')
     nota = Nota(
